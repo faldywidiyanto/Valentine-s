@@ -72,38 +72,70 @@
     .close-btn:hover {
       background-color: #ff66b2;
     }
+
+    /* Character animation */
+    .character {
+      font-size: 100px;
+      animation: move 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes move {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(10px); }
+    }
   </style>
 </head>
 <body>
 
   <h1>Welcome to Valentine's Popcart!</h1>
   <p>Click below to open the popcart with your goodies 🛍️</p>
-  <button class="button" onclick="openPopcart()">Open Popcart</button>
+  <button class="button" onclick="openPopcart1()">Open Popcart</button>
 
-  <!-- Pop-up cart -->
-  <div class="popup-cart" id="popupCart">
-    <h2>Your Valentine's Cart</h2>
-    <p>Here are some amazing gifts for your loved ones 💖</p>
-    <ul>
-      <li>Heart-shaped chocolates</li>
-      <li>Rose bouquet</li>
-      <li>Personalized cards</li>
-    </ul>
+  <!-- Pop-up 1 -->
+  <div class="popup-cart" id="popupCart1">
+    <h2>Maaf belum bisa kasih bunga atau cokelat secara langsung. Kali ini diwakilkan sama pria kecil ini dulu yaa</h2>
+    <button class="close-btn" onclick="openPopcart2()">Next</button>
+  </div>
+
+  <!-- Pop-up 2 -->
+  <div class="popup-cart" id="popupCart2">
+    <h2>Selamat Hari Kasih Sayang Orang Tersayang</h2>
+    <div class="character">🤵🌹🍫</div>
+    <button class="close-btn" onclick="openPopcart3()">Next</button>
+  </div>
+
+  <!-- Pop-up 3 -->
+  <div class="popup-cart" id="popupCart3">
+    <h2>Thanks for being here! 💖</h2>
+    <p>Hope you enjoy your Valentine's Day!</p>
     <button class="close-btn" onclick="closePopcart()">Close</button>
   </div>
 
   <script>
-    // Function to open the popcart
-    function openPopcart() {
-      document.getElementById('popupCart').style.display = 'block';
+    // Function to open the first popcart
+    function openPopcart1() {
+      document.getElementById('popupCart1').style.display = 'block';
     }
 
-    // Function to close the popcart
+    // Function to open the second popcart
+    function openPopcart2() {
+      document.getElementById('popupCart1').style.display = 'none';
+      document.getElementById('popupCart2').style.display = 'block';
+    }
+
+    // Function to open the third popcart
+    function openPopcart3() {
+      document.getElementById('popupCart2').style.display = 'none';
+      document.getElementById('popupCart3').style.display = 'block';
+    }
+
+    // Function to close all popcarts
     function closePopcart() {
-      document.getElementById('popupCart').style.display = 'none';
+      document.getElementById('popupCart3').style.display = 'none';
     }
   </script>
 
 </body>
 </html>
+
 
