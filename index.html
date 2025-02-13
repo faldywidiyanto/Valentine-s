@@ -1,35 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valentine's Love</title>
-    <link rel="stylesheet" href="style.css">
-    <script>
-        // Function to update message based on visits
-        function showMessage() {
-            let visitCount = localStorage.getItem('visitCount') || 0;
-            visitCount = parseInt(visitCount) + 1;
-            
-            // Store visit count
-            localStorage.setItem('visitCount', visitCount);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Valentine's Popcart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffe6f2;
+      text-align: center;
+      color: #ff66b2;
+    }
 
-            const messages = [
-                "Happy Valentine's Day, My Love! 💖",
-                "You make my world brighter every day. 💘",
-                "I am so lucky to have you in my life. 😘"
-            ];
+    h1 {
+      font-size: 3em;
+      margin-top: 50px;
+    }
 
-            // Set the message to show based on visit count
-            document.getElementById('message').innerText = messages[visitCount - 1] || messages[2];
-        }
-    </script>
+    p {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+
+    .button {
+      background-color: #ff66b2;
+      color: white;
+      font-size: 1.2em;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 30px;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #ff3385;
+    }
+
+    /* Pop-up cart styles */
+    .popup-cart {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      width: 80%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .popup-cart h2 {
+      color: #ff66b2;
+    }
+
+    .close-btn {
+      background-color: #ff3385;
+      color: white;
+      font-size: 1em;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .close-btn:hover {
+      background-color: #ff66b2;
+    }
+  </style>
 </head>
-<body onload="showMessage()">
-    <div class="container">
-        <h1 class="heading">Valentine's Love 💖</h1>
-        <p id="message" class="message">Loading your love message...</p>
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="link">Click here for a special video!</a>
-    </div>
+<body>
+
+  <h1>Welcome to Valentine's Popcart!</h1>
+  <p>Click below to open the popcart with your goodies 🛍️</p>
+  <button class="button" onclick="openPopcart()">Open Popcart</button>
+
+  <!-- Pop-up cart -->
+  <div class="popup-cart" id="popupCart">
+    <h2>Your Valentine's Cart</h2>
+    <p>Here are some amazing gifts for your loved ones 💖</p>
+    <ul>
+      <li>Heart-shaped chocolates</li>
+      <li>Rose bouquet</li>
+      <li>Personalized cards</li>
+    </ul>
+    <button class="close-btn" onclick="closePopcart()">Close</button>
+  </div>
+
+  <script>
+    // Function to open the popcart
+    function openPopcart() {
+      document.getElementById('popupCart').style.display = 'block';
+    }
+
+    // Function to close the popcart
+    function closePopcart() {
+      document.getElementById('popupCart').style.display = 'none';
+    }
+  </script>
+
 </body>
 </html>
+
