@@ -1,0 +1,273 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halaman Foto dan Surat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Styling yang ada di sini tetap sama */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            color: #fff;
+            overflow-x: hidden;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Memastikan body selalu setidaknya setinggi layar */
+            background-color: #000; /* Menambahkan latar belakang hitam untuk tampilan kontras */
+            padding: 0 20px; /* Margin horizontal */
+        }
+        .background-gif {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            object-fit: cover;
+            filter: grayscale(100%);
+            opacity: 0.5;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border-radius: 8px;
+            max-width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            color: #f8e5d0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin: 0;
+        }
+        .gallery img {
+            height: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+            width: 100%; /* atau bisa diubah ke ukuran spesifik seperti 200px */
+            object-fit: cover;
+        }
+        .button {
+            display: inline-block;
+            background-color: #f8e5d0;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-family: 'Playfair Display', serif;
+            cursor: pointer;
+            margin: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .button:hover {
+            background-color: #f1d8c0;
+            transform: scale(1.05);
+        }
+        .audio-player {
+            margin-top: 20px;
+        }
+        .letter-container {
+            display: none;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            color: #000;
+            max-width: 800px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+        .thumbnails {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        .thumbnails img {
+            width: 100%; /* atau bisa diubah ke ukuran spesifik seperti 200px */
+            height: 100px; /* Ukuran tetap agar semua gambar seragam */
+            object-fit: cover; /* Ini akan memotong gambar untuk menyesuaikan aspek rasio tanpa meregangkannya */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+        .feedback-container {
+            display: none;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            color: #000;
+            max-width: 800px;
+            margin: 20px auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
+        .feedback-container button {
+            display: inline-block;
+            background-color: #f8e5d0;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .feedback-container textarea {
+            width: 100%; /* Lebar dikurangi margin kiri dan kanan */
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- GIF Background -->
+    <video class="background-gif" autoplay loop muted>
+        <source src="https://media.giphy.com/media/3o8cHEmJxK09PyJBAs/giphy.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Konten Utama -->
+    <div class="content" id="mainContent">
+
+        <!-- Gallery Foto -->
+        <div class="gallery" id="gallery">
+            <img id="currentImage" src="../Foto/Faldy%201.jpeg" alt="Foto">
+        </div>
+
+        <!-- Tombol Next -->
+        <div style="text-align:center;">
+            <button class="button" id="nextButton" onclick="showNextImage()">Next</button>
+        </div>
+
+    </div>
+
+    <!-- Kontainer Surat dan Thumbnail -->
+    <div class="letter-container" id="letterContainer">
+        <div class="thumbnails" id="thumbnailsContainer">
+            <!-- Thumbnails will be generated here -->
+        </div>
+        <h2>Dear David Rifaldy Dimas Widiyanto,</h2>
+        <p>Halo mas.<br>Apa kabar?<br>Masih suka denger kabar dari gua ga?<br><br>Pas lu baca berarti gua udah di China, padahal gua udah seneng banget tadinya ada temen tahun baruan.<br>Kapan ya kita ketemu lagi? Tapi gimana pun baik-baik ya mas. Biar kalau kita ketemu lagi, kita bisa jalan-jalan lagi.
+        <br><br>Gua masih inget banget gimana jailnya lu ke gua. Ah jadi kangen sayanya.<br>Makasih udah jadi teman yang menemani hari-hari saya. Maaf ya kalau sayanya nyusahin atau ngeselin.
+        Makasih udah perhatian ke Tya. Banyak perhatian dari lu yang selalu gua inget. Terutama cerita-cerita yang sering gua curhat ke lu, yang bahkan masih suka lu inget.<br><br>Sejauh ini gua hanya bisa melihat lu hebat dan kuat. Jadi gua yakin untuk kedepannya juga lu begitu. Jangan pernah menyerah dengan diri sendiri ya.
+        <br><br>Kira-kira kita bakal sering komunikasi ga ya? Tapi ada kemungkinan sih kita ga akan komunikasi lagi.<br><br>Kalau nanti gua main-main ke Indonesia, harus mau diajak main ya. Dan kalau suatu saat rejeki gua bertambah, harus siap-siap gua kirimin tiket ya, ga boleh nolak.<br><br>
+        Gua ga bisa sejauh ini tanpa dukungan dari lu. Kalau Tuhan mengkehendaki kita untuk bertemu lagi, Tuhan pasti akan selalu nyiapin rencana indah. Ga ada 1 kali pun gua sesali karena ketemu lu di hidup ini.<br><br>Gua bakal kangen banget, atas semuanya. Gereja bareng, jalan bareng dll.
+        <br><br>Makasih untuk semuanya mas. Kenangan yang indah kita simpen sama-sama ya. Kenangan yang jelek kita buang.<br><br>See You Again Mas, I Love You <span style="color: #e25555;">&#9829;</span></p></p>
+        <p>Peluk Erat,</p>
+        <p>Helpin Elnur Nitya</p><br>
+        <p>nb. Jangan lupa pake kuponnya ya, karena hanya dengan ini gua bisa terus mendukung lu dari jauh</p>
+        <!-- Tombol Kirim Feedback -->
+        <button class="button" id="feedbackButton" onclick="showFeedbackContainer()">Kirim Feedback</button>
+    </div>
+
+    <!-- Kontainer Feedback -->
+    <div class="feedback-container" id="feedbackContainer">
+        <h2>Send Feedback</h2>
+        <textarea id="popupFeedbackText" rows="4" placeholder="Tulis kata hati Anda..."></textarea>
+        <button class="button" onclick="sendFeedback()">Kirim Feedback</button>
+    </div>
+
+    <!-- Audio Player -->
+    <audio id="bgAudio" src="../Media/MAHALINI - SAMPAI MENUTUP MATA (OFFICIAL MUSIC VIDEO) (1).mp3" preload="auto"></audio>
+
+    <script>
+        // Daftar gambar untuk gallery
+        const images = [
+            "../Foto/Faldy%201.jpeg",
+            "../Foto/Faldy%202.jpeg",
+            "../Foto/Faldy%203.jpeg",
+            "../Foto/Faldy%204.jpeg",
+            "../Foto/Faldy%205.jpeg",
+            "../Foto/Faldy%206.jpeg"
+        ];
+
+        let currentIndex = 0;
+
+        // Fungsi untuk menampilkan gambar berikutnya
+        function showNextImage() {
+            currentIndex++;
+            if (currentIndex >= images.length) {
+                showLetterContainer(); // Menampilkan kontainer surat saat gambar terakhir
+            } else {
+                document.getElementById("currentImage").src = images[currentIndex];
+            }
+        }
+
+        // Fungsi untuk menampilkan kontainer surat
+        function showLetterContainer() {
+            const letterContainer = document.getElementById('letterContainer');
+            const content = document.getElementById('mainContent'); // Mengambil konten utama
+            const thumbnailsContainer = document.getElementById('thumbnailsContainer');
+            const feedbackButton = document.getElementById('feedbackButton');
+        
+            // Sembunyikan konten utama
+            content.style.display = 'none';
+        
+            // Buat thumbnail untuk semua gambar
+            images.forEach(src => {
+                const imgElement = document.createElement('img');
+                imgElement.src = src;
+                thumbnailsContainer.appendChild(imgElement);
+            });
+        
+            letterContainer.style.display = 'block'; // Tampilkan kontainer surat
+            feedbackButton.style.display = 'block'; // Pastikan tombol Kirim Feedback ditampilkan
+        }
+
+        // Fungsi untuk menampilkan kontainer feedback
+        function showFeedbackContainer() {
+            document.getElementById('feedbackContainer').style.display = 'block';
+            document.getElementById('feedbackButton').style.display = 'none'; // Sembunyikan tombol Kirim Feedback
+        }
+
+        // Fungsi untuk mengirim feedback
+        function sendFeedback() {
+            const feedbackText = document.getElementById('popupFeedbackText').value;
+            if (feedbackText.trim() !== '') {
+                const encodedFeedback = encodeURIComponent(feedbackText);
+                const phoneNumber = '6287893386019';
+                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedFeedback}`;
+                window.open(whatsappURL, '_blank');
+                document.getElementById('popupFeedbackText').value = ''; // Kosongkan textarea
+            } else {
+                alert('Tolong tulis feedback Anda.');
+            }
+        }
+
+        // Autoplay audio dan mulai dari detik ke-15
+        window.addEventListener('load', () => {
+            const audio = document.getElementById('bgAudio');
+            audio.currentTime = 15;
+            audio.play().then(() => {
+                console.log('Audio mulai diputar');
+            }).catch(error => {
+                console.log('Audio tidak bisa diputar:', error);
+            });
+
+            audio.addEventListener('ended', () => {
+                audio.currentTime = 15;
+                audio.play().catch(error => {
+                    console.log('Audio tidak bisa diputar setelah selesai:', error);
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
