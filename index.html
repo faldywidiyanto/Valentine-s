@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>its_elxxr</title>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        /* Tema Alam dengan Giphy latar belakang */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            background-color: #87CEEB; /* Warna fallback untuk background */
+        }
+
+        /* Giphy Background */
+        #bgGiphy {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Agar Giphy tetap di latar belakang */
+            overflow: hidden;
+        }
+
+        #bgGiphy iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            object-fit: cover; /* Memastikan GIF mengisi seluruh area tanpa distorsi */
+        }
+
+        /* Container konten di atas Giphy */
+        .container {
+            background-color: rgba(255, 255, 255, 0.8); /* Transparansi */
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            color: #333;
+            position: relative;
+            z-index: 1; /* Agar container di atas Giphy */
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            color: #2E8B57; /* Warna hijau dedaunan */
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: #228B22; /* Warna hijau daun */
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2E8B57;
+        }
+
+        /* Efek blur latar belakang saat SweetAlert aktif */
+        .swal2-shown .container {
+            filter: blur(5px); /* Efek blur pada container */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Giphy Background -->
+    <div id="bgGiphy">
+        <iframe src="https://giphy.com/embed/JUZ8v4zWXX9bEZgBq8" frameborder="0" class="giphy-embed" allowfullscreen></iframe>
+    </div>
+
+    <div class="container">
+        <h1>Halo... Selamat Datang di Web<br><b><i>its_elxxr</i></b></h1>
+        <p>Klik tombol di bawah ya untuk masuk ke dalam website!<br>Jangan lupa masukin kode yang ada di kertasnya!</p>
+        <button id="inputCodeBtn">Masukkan Kode</button>
+    </div>
+
+    <!-- Audio -->
+    <audio id="welcomeAudio" src="Media/Selamat Datang.mp3" preload="auto"></audio>
+
+    <script>
+        // Memainkan audio saat halaman dimuat
+        window.addEventListener('load', () => {
+            const audio = document.getElementById('welcomeAudio');
+            const playAudio = () => {
+                audio.play().catch(error => {
+                    console.log('Audio tidak bisa diputar:', error);
+                });
+            };
+        
+            // Putar audio setelah interaksi tombol
+            document.getElementById('inputCodeBtn').addEventListener('click', function() {
+                playAudio(); // Memainkan audio setelah tombol diklik
+                Swal.fire({
+                    title: 'Masukkan Kode',
+                    input: 'text',
+                    inputPlaceholder: 'Masukkan kode Anda di sini',
+                    showCancelButton: true,
+                    confirmButtonText: 'Kirim',
+                    cancelButtonText: 'Batal',
+                    preConfirm: (code) => {
+                        if (!code) {
+                            Swal.showValidationMessage('Kode tidak boleh kosong!');
+                        } else {
+                            return code;
+                        }
+                    },
+                    willOpen: () => {
+                        document.body.classList.add('swal2-shown'); // Tambahkan kelas untuk efek blur
+                    },
+                    willClose: () => {
+                        document.body.classList.remove('swal2-shown'); // Hapus kelas setelah SweetAlert ditutup
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const code = result.value;
+                        if (code === '207') {
+                            window.location.href = 'File/270207.html'; // Redirect ke yanti
+                        } else if (code === '187') {
+                            window.location.href = 'File/270187.html'; // Redirect ke agnes
+                        } else if (code === '375') {
+                            window.location.href = 'File/270375.html'; // Redirect ke via
+                        } else if (code === '170') {
+                            window.location.href = 'File/270170.html'; // Redirect ke faldy
+                        } else if (code === '257') {
+                            window.location.href = 'File/270257.html'; // Redirect ke yoga
+                        } else {
+                            Swal.fire('Kode tidak valid'); // Menampilkan pesan jika kode tidak sesuai
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
